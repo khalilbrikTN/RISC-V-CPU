@@ -1,0 +1,21 @@
+
+22/3:
+
+LW
+LB
+LH
+SW
+SH
+ADDI
+
+28/3:
+
+Worked on Data Path
+Worked on Top Module
+Ecall with PC locking
+Ebreak and fence
+Updated ImmGen to support more instruction types, such as LUI and AUIPC
+AUIPC
+Helped with Diagram
+Tested everything to make sure the final project works
+Finalized the project's code
