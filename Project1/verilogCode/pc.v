@@ -7,13 +7,18 @@ module pc (
     input branch_sel,
     input [1:0] jump,
     input [31:0] alu_result,
+    input program_finished,
     output reg [7:0] counter
 );
   wire [31:0] if_branch;
+  reg pc_locked = 0;
   assign if_branch = counter + immediate * 2'd2;
   always @(posedge clk or posedge rst) begin
     if (rst == 1) begin
       counter <= 0;
+    end else if (pc_locked || program_finished) begin
+      counter   <= 0;
+      pc_locked <= 1;
     end else if (counter < 100) begin
       if (branch_sel) begin
         counter <= if_branch;

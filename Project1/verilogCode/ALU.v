@@ -18,17 +18,16 @@ module ALU #(
 
   always @(*) begin
     case (alu_ctrl)
-      4'b0010: res = (alu_rs1 + alu_rs2);  // ADD
-      4'b0110: res = (alu_rs1 - alu_rs2);  // SUB
-      4'b0000: res = (alu_rs1 & alu_rs2);  // AND
-      4'b0001: res = (alu_rs1 | alu_rs2);  // OR
-      4'b0011: res = (alu_rs1 << alu_rs2[4:0]);  // SLL
-      4'b0100: res = ($signed(alu_rs1) < $signed(alu_rs2));  // SLT
-      4'b0101: res = ($signed(alu_rs1) < $signed(alu_rs2));  // SLTU
-      4'b0111: res = (alu_rs1 ^ alu_rs2);  // XOR
-      4'b1000: res = (alu_rs1 >> alu_rs2[4:0]);  // SRL
-      4'b1010: res = $signed($signed(alu_rs1) >>> $signed(alu_rs2[4:0]));  // SRA
-      4'b1100: res = { {12{rs2[19]}}, rs2[19:0] }; // LoadUpperImmediate
+      4'b0010: res = (alu_rs1 + alu_rs2);
+      4'b0110: res = (alu_rs1 - alu_rs2);
+      4'b0000: res = (alu_rs1 & alu_rs2);
+      4'b0001: res = (alu_rs1 | alu_rs2);
+      4'b0011: res = (alu_rs1 << alu_rs2[4:0]);
+      4'b0100: res = ($signed(alu_rs1) < $signed(alu_rs2));
+      4'b0101: res = ($signed(alu_rs1) < $signed(alu_rs2));
+      4'b0111: res = (alu_rs1 ^ alu_rs2);
+      4'b1000: res = (alu_rs1 >> alu_rs2[4:0]);
+      4'b1010: res = $signed($signed(alu_rs1) >>> $signed(alu_rs2[4:0]));
       default: res = 32'd0;
     endcase
 

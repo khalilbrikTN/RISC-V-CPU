@@ -1,46 +1,20 @@
-`timescale 1ns / 1ps
+`include "defines.v"
 
 module ImmGen (
-    input [31:0] inst,
-    output reg [31:0] gen_out
+    input  wire [31:0] inst,
+    output reg  [31:0] gen_out
 );
-assign opcode = inst[6:0];
-  always @* begin
-    if (inst[31]) begin
-      // Sign extension for negative immediate values
-      gen_out = 32'b11111111111111111111111111111111;
-    end
-    else begin
-      gen_out = 0;
-    end
-
-    if (inst[6:0] == 7'b1100011 ) begin
-      // B-type instruction
-      gen_out[10] = inst[7];
-      gen_out[3:0] = inst[11:8];
-      gen_out[9:4] = inst[30:25];
-      gen_out[11]  = inst[31];
-    end
-    else if (opcode == 7'b0100011) begin
-        // S-type instruction
-        gen_out[11:5] = inst[31:25];
-        gen_out[4:0]  = inst[11:7];
-      end
-      else if(opcode == 7'b1101111) begin
-        // jump and link instruction
-        gen_out[20] = inst[31];
-        gen_out[10:1] = inst[30:21];
-        gen_out[11] = inst[20];
-        gen_out[19:12] = inst[19:12];
-      end
-      else if(opcode == 7'b1100111) begin
-        // jump and link register instruction
-        gen_out[11:0] = inst[31:20];
-      end
-      else begin
-        // I intructions
-        gen_out[11:0] = inst[31:20];
-      end
-    end
-
+  always @(*) begin
+    case (`OPCODE)
+      `OPCODE_Arith_I: gen_out = {{21{inst[31]}}, inst[30:25], inst[24:21], inst[20]};
+      `OPCODE_Store: gen_out = {{21{inst[31]}}, inst[30:25], inst[11:8], inst[7]};
+      `OPCODE_LUI: gen_out = {inst[31], inst[30:20], inst[19:12], 12'b0};
+      `OPCODE_AUIPC: gen_out = {inst[31], inst[30:20], inst[19:12], 12'b0};
+      `OPCODE_JAL:
+      gen_out = {{12{inst[31]}}, inst[19:12], inst[20], inst[30:25], inst[24:21], 1'b0};
+      `OPCODE_JALR: gen_out = {{21{inst[31]}}, inst[30:25], inst[24:21], inst[20]};
+      `OPCODE_Branch: gen_out = {{20{inst[31]}}, inst[7], inst[30:25], inst[11:8], 1'b0};
+      default: gen_out = {{21{inst[31]}}, inst[30:25], inst[24:21], inst[20]};  // IMM_I
+    endcase
+  end
 endmodule

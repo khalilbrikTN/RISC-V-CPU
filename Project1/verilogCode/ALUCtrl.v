@@ -9,7 +9,7 @@ module ALUCtrl (
   always @(*) begin
     case (alu_op)
       2'b00: alu_ctrl = 4'b0010;
-      2'b01: alu_ctrl = 4'b0110; 
+      2'b01: alu_ctrl = 4'b0110;
       2'b10:
       case ({
         func7bit30, func3
@@ -24,7 +24,6 @@ module ALUCtrl (
         4'b0100: alu_ctrl = 4'b0111;  // xor
         4'b0101: alu_ctrl = 4'b1000;  // srl
         4'b1101: alu_ctrl = 4'b1010;  // sra
-        4'b1100: alu_ctrl = 4'b1011; // LUI
         default: alu_ctrl = 4'b0000;
       endcase
       2'b11:
@@ -47,7 +46,7 @@ module ALUCtrl (
       endcase
       default: alu_ctrl = 4'b0000;
     endcase
-unsigned_signal = (({func3} == 3'b011) && (alu_op[1] == 1'b1)) | ((alu_op == 2'b01) && (func3 == 3'b011));
+    unsigned_signal = (({func3} == 3'b011) && (alu_op[1] == 1'b1)) | ((alu_op == 2'b01) && (func3 == 3'b011));
 
   end
 endmodule

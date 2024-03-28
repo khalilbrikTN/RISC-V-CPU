@@ -13,7 +13,6 @@
 `include "../../sources_1/new/Immgen.v"
 `include "../../sources_1/new/branch_ctrl.v"
 
-
 `timescale 1ns / 1ps
 
 module TopLevel (
@@ -25,7 +24,8 @@ module TopLevel (
     output reg [15:0] leds,
     output [3:0] anode,
     output [6:0] led_out,
-    output [3:0] disable_anodes
+    output [3:0] disable_anodes,
+    output program_finished
 );
   // local parameters for case statements
   localparam SSD_SEL_PC = 4'b0000;
@@ -46,28 +46,37 @@ module TopLevel (
   localparam LED_SEL_CONTROL_SIG = 2'b10;
 
   // Wires for datapath
-  wire [7:0] pc_input;
-  wire [7:0] pc_input_with_reset_output;
-  wire [7:0] pc_output;
-  reg [12:0] ssd_num;
-  wire [7:0] pc_p4_adder_output;
+  wire [ 7:0] pc_input;
+  wire [ 7:0] pc_input_with_reset_output;
+  wire [ 7:0] pc_output;
+  reg  [12:0] ssd_num;
+  wire [ 7:0] pc_p4_adder_output;
   wire [31:0] instruction;
   wire [31:0] immediate_expanded;
   wire [31:0] shift_left_output;
-  wire [7:0] shift_left_pc_adder_output;
+  wire [ 7:0] shift_left_pc_adder_output;
+  wire [31:0] alu_first_input;
+  assign alu_first_input = AUIPCSel ? pc_output : read_data1;
   wire [31:0] alu_second_input;
   wire unsigned_signal;
   wire [31:0] alu_result;
   wire [31:0] write_data;
+  assign write_data = PassImm ? immediate_expanded : load_cu_or_alu_out;
+  wire [31:0] load_cu_or_alu_out;
   wire [31:0] read_data1;
   wire [31:0] read_data2;
   wire [31:0] data_mem_out;
+  wire [31:0] load_controller_out;
   wire Branch;
   wire MemRead;
   wire MemtoReg;
   wire MemWrite;
   wire ALUSrc;
   wire RegWrite;
+  wire PassImm;
+  wire AUIPCSel;
+  wire EnvironmentCall;
+  assign program_finished = EnvironmentCall && immediate_expanded == 0;
   wire branch_sel;
   wire [1:0] jump;
   wire [1:0] ALUOp;
@@ -91,7 +100,6 @@ module TopLevel (
     branch_and_output
   };
 
-
   branch_ctrl branch_control (
       .branch_op(instruction[14:12]),
       .branch(Branch),
@@ -99,6 +107,7 @@ module TopLevel (
       .negative(negative_flag),
       .branch_sel(branch_sel)
   );
+
   pc program_counter (
       .alu_result(alu_result),
       .clk(clk),
@@ -106,6 +115,7 @@ module TopLevel (
       .immediate(immediate_expanded),
       .branch_sel(branch_sel),
       .jump(jump),
+      .program_finished(program_finished),
       .counter(pc_output)
   );
 
@@ -137,6 +147,9 @@ module TopLevel (
       .ALUSrc(ALUSrc),
       .RegWrite(RegWrite),
       .ALUOp(ALUOp),
+      .PassImm(PassImm),
+      .AUIPCSel(AUIPCSel),
+      .EnvironmentCall(EnvironmentCall),
       .jump(jump)
   );
 
@@ -175,7 +188,7 @@ module TopLevel (
   );
 
   ALU alu (
-      .rs1(read_data1),
+      .rs1(alu_first_input),
       .rs2(alu_second_input),
       .alu_ctrl(alu_ctrl),
       .unsigned_signal(unsigned_signal),
@@ -193,13 +206,20 @@ module TopLevel (
       .data_out(data_mem_out)
   );
 
+  LoadController load_controller (
+      .mem_data(data_mem_out),
+      .addr(alu_result[5:0]),
+      .funct3(instruction[14:12]),
+      .data_out(load_controller_out)
+  );
+
   Mux #(
       .N(32)
   ) rf_write_data_mux (
       .in0(alu_result),
-      .in1(data_mem_out),
+      .in1(load_controller_out),
       .sel(MemtoReg),
-      .out(write_data)
+      .out(load_cu_or_alu_out)
   );
 
   ShiftLeft1 shiftleft1 (
