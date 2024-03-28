@@ -1,0 +1,34 @@
+11/3: 
+
+Started Data Path
+
+15/3:
+
+Implemented the ADD instruction to perform arithmetic addition operations between two registers and store the result in a third register. 
+
+Completed the SUB instruction, enabling the CPU to perform subtraction operations by subtracting one register from another and storing the result in a third register. 
+
+Successfully integrated the AND instruction, allowing the CPU to perform bitwise AND operations between two registers and store the result in a third register. 
+
+Finalized the OR instruction, enabling the CPU to perform bitwise OR operations between two registers and store the result in a third register. 
+
+18/3: 
+
+Collaborated on integrating the ALU module, responsible for performing arithmetic and logical operations such as ADD, SUB, AND, and OR.
+Ensured seamless communication between the ALU and other components within the CPU.
+
+20/3: 
+
+Collaborated on integrating the Control Unit module, responsible for generating control signals based on the fetched instructions.
+
+Ensured accurate interpretation of instruction opcodes and generation of corresponding control signals.
+
+Worked on supporting specialized instructions such as shifting and immediate generation.
+
+Ensured proper execution of instructions requiring immediate values or shifts.
+
+28/3:
+
+Finished Data Path (added load control unit )
+Developed Report
+Created a dedicated folder for project submission, ensuring all required documents and code files are organized and readily accessible.
