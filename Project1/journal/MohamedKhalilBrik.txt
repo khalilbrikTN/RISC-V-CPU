@@ -23,9 +23,6 @@ Collaborated on integrating the Control Unit module, responsible for generating 
 
 Ensured accurate interpretation of instruction opcodes and generation of corresponding control signals.
 
-Worked on supporting specialized instructions such as shifting and immediate generation.
-
-Ensured proper execution of instructions requiring immediate values or shifts.
 
 28/3:
 
