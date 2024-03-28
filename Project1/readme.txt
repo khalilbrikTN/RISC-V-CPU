@@ -7,6 +7,6 @@ and optionally include bonus features for additional functionality.
 
 Contributors:
 
-Alyaman Hizeifa Masarani --
-Mohamed AbdelMagid
-Mohamed Khalil Brik -- 900225905
+Alyaman Huzaifa Massarani (900225917)
+Mohamed Khalil Brik (900225905)
+Mohamed Ibrahim Abdelmagid ()
