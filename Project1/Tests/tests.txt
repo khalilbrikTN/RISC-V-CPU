@@ -1,0 +1,91 @@
+# Test Case 1: Arithmetic and Logical Instructions
+
+# ADD: Add two registers and store result in a third register
+ADD x1, x2, x3    # x1 = x2 + x3
+
+# SUB: Subtract one register from another and store result in a third register
+SUB x4, x5, x6    # x4 = x5 - x6
+
+# AND: Bitwise AND of two registers and store result in a third register
+AND x7, x8, x9    # x7 = x8 & x9
+
+# OR: Bitwise OR of two registers and store result in a third register
+OR x10, x11, x12  # x10 = x11 | x12
+
+# XOR: Bitwise XOR of two registers and store result in a third register
+XOR x13, x14, x15 # x13 = x14 ^ x15
+
+# SLT: Set x16 to 1 if x17 is less than x18, otherwise set x16 to 0
+SLT x16, x17, x18 # if (x17 < x18) x16 = 1; else x16 = 0
+
+# SLL: Shift left logical x19 by the value in x20 and store result in x21
+SLL x21, x19, x20 # x21 = x19 << x20
+
+# SRL: Shift right logical x22 by the value in x23 and store result in x24
+SRL x24, x22, x23 # x24 = x22 >> x23
+
+# SRA: Shift right arithmetic x25 by the value in x26 and store result in x27
+SRA x27, x25, x26 # x27 = x25 >> x26 (arithmetically)
+
+# Test Case 2: Load and Store Instructions
+
+# LW: Load word from memory into register x28
+LW x28, 100(x29)  # x28 = Memory[100 + x29]
+
+# LH: Load halfword from memory into register x30
+LH x30, -200(x31) # x30 = Memory[-200 + x31]
+
+# SW: Store word from register x1 into memory
+SW x1, 300(x2)    # Memory[300 + x2] = x1
+
+# SH: Store halfword from register x3 into memory
+SH x3, -400(x4)   # Memory[-400 + x4] = x3
+
+# Test Case 3: Control Transfer Instructions
+
+# BEQ: Branch if equal, jump to label 'Label1' if x5 is equal to x6
+BEQ x5, x6, Label1
+
+# BNE: Branch if not equal, jump to label 'Label2' if x7 is not equal to x8
+BNE x7, x8, Label2
+
+# BLT: Branch if less than, jump to label 'Label3' if x9 is less than x10
+BLT x9, x10, Label3
+
+# BGE: Branch if greater than or equal, jump to label 'Label4' if x11 is greater than or equal to x12
+BGE x11, x12, Label4
+
+# BLTU: Branch if less than unsigned, jump to label 'Label5' if x13 is less than x14 (unsigned comparison)
+BLTU x13, x14, Label5
+
+# BGEU: Branch if greater than or equal unsigned, jump to label 'Label6' if x15 is greater than or equal to x16 (unsigned comparison)
+BGEU x15, x16, Label6
+
+# JAL: Jump and link, jump to label 'Label7' and store the address of the next instruction in register x17
+JAL x17, Label7
+
+# JALR: Jump and link register, jump to the address in register x18 and store the address of the next instruction in register x19
+JALR x19, x18, 0
+
+# Test Case 4: Immediate Instructions
+
+# ADDI: Add immediate value to register x20 and store result in register x21
+ADDI x21, x20, 100  # x21 = x20 + 100
+
+# SLTI: Set x22 to 1 if x23 is less than immediate value, otherwise set x22 to 0
+SLTI x22, x23, -50  # if (x23 < -50) x22 = 1; else x22 = 0
+
+# SLTIU: Set x24 to 1 if x25 is less than immediate value (unsigned comparison), otherwise set x24 to 0
+SLTIU x24, x25, 50  # if (x25 < 50) x24 = 1; else x24 = 0
+
+# XORI: Bitwise XOR immediate value with register x26 and store result in register x27
+XORI x27, x26, 0xFF # x27 = x26 ^ 0xFF
+
+# SLLI: Shift left logical register x28 by immediate value and store result in register x29
+SLLI x29, x28, 5    # x29 = x28 << 5
+
+# SRLI: Shift right logical register x30 by immediate value and store result in register x31
+SRLI x31, x30, 3    # x31 = x30 >> 3
+
+# SRAI: Shift right arithmetic register x1 by immediate value and store result in register x2
+SRAI x2, x1, 2      # x2 = x1 >> 2 (arithmetically)
