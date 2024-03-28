@@ -1,0 +1,24 @@
+Date: Mar 28, 2024
+
+- Fixed signed issue, sra issue remaining.
+
+Date: Mar 27, 2024
+
+- Added support for Unsigned instructions.
+
+- Added gitignore file. 
+
+Date: Mar 26, 2024
+
+- Added ALU, Jump, branch instructions.
+
+Date: Mar 25, 2024
+
+- Updated Added support for ALU, Jump, Branch instruction as well as Instruction fetching from text file. [Commit: 524ca3f9]
+
+Date: Mar 24, 2024
+
+- Updated Jump, branch, ALU, imm_gen, cu.
+- Updated Imm_gen.
+- Updated ALU_ctrl.
+- Updated ALU. 
